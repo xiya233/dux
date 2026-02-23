@@ -49,13 +49,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Ensure the pre is visible inside the container but styled basic
         pre.style.opacity = '1';
-        pre.style.padding = '15px';
+        pre.style.padding = '12px';
         pre.style.margin = '0';
         pre.style.overflowX = 'auto';
         pre.style.color = '#abb2bf';
         pre.style.backgroundColor = 'transparent';
         pre.style.fontFamily = 'Consolas, Monaco, "Courier New", monospace';
-        pre.style.fontSize = '14px';
+        pre.style.fontSize = '13px';
+        pre.style.lineHeight = '1.5';
 
         wrapper.setAttribute('data-shiki', 'loading');
     });
