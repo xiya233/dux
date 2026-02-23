@@ -3877,6 +3877,17 @@ body.sign-show {
 
 .shiki-mac-dot.close {
 	background-color: #ff5f56;
+	opacity: 1;
+	/* Override Bootstrap .close opacity */
+	text-shadow: none;
+	/* Override Bootstrap text-shadow */
+	pointer-events: none;
+	/* Prevent clicking */
+}
+
+.shiki-mac-dot.close:hover {
+	opacity: 1;
+	background-color: #ff5f56;
 }
 
 .shiki-mac-dot.minimize {
