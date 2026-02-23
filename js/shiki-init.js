@@ -21,7 +21,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         for (const pre of presToProcess) {
             let codeText = pre.textContent || '';
-            let lang = detectLanguage(codeText);
+            const codeEl = pre.querySelector('code');
+            const className = (codeEl && codeEl.className) || pre.className;
+            const match = className && className.match(/language-([a-zA-Z0-9_-]+)/);
+
+            let lang = (match && match[1]) ? match[1] : detectLanguage(codeText);
+
+            if (lang !== 'text' && !highlighter.getLoadedLanguages().includes(lang)) {
+                try {
+                    await highlighter.loadLanguage(lang);
+                } catch (e) {
+                    console.warn(`Shiki loadLanguage failed for '${lang}', falling back to text.`, e);
+                    lang = 'text';
+                }
+            }
 
             const html = highlighter.codeToHtml(codeText, {
                 lang: lang,
