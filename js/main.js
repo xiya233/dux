@@ -1,6 +1,6 @@
-if( !window.console ){
+if (!window.console) {
     window.console = {
-        log: function(){}
+        log: function () { }
     }
 }
 
@@ -19,7 +19,7 @@ if( !window.console ){
  * Version:  0.2.0
  * 
  */
-!function(a){var b=window.Chicago||{utils:{now:Date.now||function(){return(new Date).getTime()},uid:function(a){return(a||"id")+b.utils.now()+"RAND"+Math.ceil(1e5*Math.random())},is:{number:function(a){return!isNaN(parseFloat(a))&&isFinite(a)},fn:function(a){return"function"==typeof a},object:function(a){return"[object Object]"===Object.prototype.toString.call(a)}},debounce:function(a,b,c){var d;return function(){var e=this,f=arguments,g=function(){d=null,c||a.apply(e,f)},h=c&&!d;d&&clearTimeout(d),d=setTimeout(g,b),h&&a.apply(e,f)}}},$:window.jQuery||null};if("function"==typeof define&&define.amd&&define("chicago",function(){return b.load=function(a,c,d,e){var f=a.split(","),g=[],h=(e.config&&e.config.chicago&&e.config.chicago.base?e.config.chicago.base:"").replace(/\/+$/g,"");if(!h)throw new Error("Please define base path to jQuery resize.end in the requirejs config.");for(var i=0;i<f.length;){var j=f[i].replace(/\./g,"/");g.push(h+"/"+j),i+=1}c(g,function(){d(b)})},b}),window&&window.jQuery)return a(b,window,window.document);if(!window.jQuery)throw new Error("jQuery resize.end requires jQuery")}(function(a,b,c){a.$win=a.$(b),a.$doc=a.$(c),a.events||(a.events={}),a.events.resizeend={defaults:{delay:250},setup:function(){var b,c=arguments,d={delay:a.$.event.special.resizeend.defaults.delay};a.utils.is.fn(c[0])?b=c[0]:a.utils.is.number(c[0])?d.delay=c[0]:a.utils.is.object(c[0])&&(d=a.$.extend({},d,c[0]));var e=a.utils.uid("resizeend"),f=a.$.extend({delay:a.$.event.special.resizeend.defaults.delay},d),g=f,h=function(b){g&&clearTimeout(g),g=setTimeout(function(){return g=null,b.type="resizeend.chicago.dom",a.$(b.target).trigger("resizeend",b)},f.delay)};return a.$(this).data("chicago.event.resizeend.uid",e),a.$(this).on("resize",a.utils.debounce(h,100)).data(e,h)},teardown:function(){var b=a.$(this).data("chicago.event.resizeend.uid");return a.$(this).off("resize",a.$(this).data(b)),a.$(this).removeData(b),a.$(this).removeData("chicago.event.resizeend.uid")}},function(){a.$.event.special.resizeend=a.events.resizeend,a.$.fn.resizeend=function(b,c){return this.each(function(){a.$(this).on("resizeend",b,c)})}}()});
+!function (a) { var b = window.Chicago || { utils: { now: Date.now || function () { return (new Date).getTime() }, uid: function (a) { return (a || "id") + b.utils.now() + "RAND" + Math.ceil(1e5 * Math.random()) }, is: { number: function (a) { return !isNaN(parseFloat(a)) && isFinite(a) }, fn: function (a) { return "function" == typeof a }, object: function (a) { return "[object Object]" === Object.prototype.toString.call(a) } }, debounce: function (a, b, c) { var d; return function () { var e = this, f = arguments, g = function () { d = null, c || a.apply(e, f) }, h = c && !d; d && clearTimeout(d), d = setTimeout(g, b), h && a.apply(e, f) } } }, $: window.jQuery || null }; if ("function" == typeof define && define.amd && define("chicago", function () { return b.load = function (a, c, d, e) { var f = a.split(","), g = [], h = (e.config && e.config.chicago && e.config.chicago.base ? e.config.chicago.base : "").replace(/\/+$/g, ""); if (!h) throw new Error("Please define base path to jQuery resize.end in the requirejs config."); for (var i = 0; i < f.length;) { var j = f[i].replace(/\./g, "/"); g.push(h + "/" + j), i += 1 } c(g, function () { d(b) }) }, b }), window && window.jQuery) return a(b, window, window.document); if (!window.jQuery) throw new Error("jQuery resize.end requires jQuery") }(function (a, b, c) { a.$win = a.$(b), a.$doc = a.$(c), a.events || (a.events = {}), a.events.resizeend = { defaults: { delay: 250 }, setup: function () { var b, c = arguments, d = { delay: a.$.event.special.resizeend.defaults.delay }; a.utils.is.fn(c[0]) ? b = c[0] : a.utils.is.number(c[0]) ? d.delay = c[0] : a.utils.is.object(c[0]) && (d = a.$.extend({}, d, c[0])); var e = a.utils.uid("resizeend"), f = a.$.extend({ delay: a.$.event.special.resizeend.defaults.delay }, d), g = f, h = function (b) { g && clearTimeout(g), g = setTimeout(function () { return g = null, b.type = "resizeend.chicago.dom", a.$(b.target).trigger("resizeend", b) }, f.delay) }; return a.$(this).data("chicago.event.resizeend.uid", e), a.$(this).on("resize", a.utils.debounce(h, 100)).data(e, h) }, teardown: function () { var b = a.$(this).data("chicago.event.resizeend.uid"); return a.$(this).off("resize", a.$(this).data(b)), a.$(this).removeData(b), a.$(this).removeData("chicago.event.resizeend.uid") } }, function () { a.$.event.special.resizeend = a.events.resizeend, a.$.fn.resizeend = function (b, c) { return this.each(function () { a.$(this).on("resizeend", b, c) }) } }() });
 
 
 /* 
@@ -29,29 +29,29 @@ if( !window.console ){
 jsui.bd = $('body')
 jsui.is_signin = jsui.bd.hasClass('logged-in') ? true : false;
 
-if( $('.widget-nav').length ){
-    $('.widget-nav li').each(function(e){
-        $(this).hover(function(){
+if ($('.widget-nav').length) {
+    $('.widget-nav li').each(function (e) {
+        $(this).hover(function () {
             $(this).addClass('active').siblings().removeClass('active')
-            $('.widget-navcontent .item:eq('+e+')').addClass('active').siblings().removeClass('active')
+            $('.widget-navcontent .item:eq(' + e + ')').addClass('active').siblings().removeClass('active')
         })
     })
 }
 
-if( $('.sns-wechat').length ){
-    $('.sns-wechat').on('click', function(){
+if ($('.sns-wechat').length) {
+    $('.sns-wechat').on('click', function () {
         var _this = $(this)
-        if( !$('#modal-wechat').length ){
+        if (!$('#modal-wechat').length) {
             $('body').append('\
                 <div class="modal fade" id="modal-wechat" tabindex="-1" role="dialog" aria-hidden="true">\
                     <div class="modal-dialog" style="margin-top:200px;width:340px;">\
                         <div class="modal-content">\
                             <div class="modal-header">\
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-                                <h4 class="modal-title">'+ _this.attr('title') +'</h4>\
+                                <h4 class="modal-title">'+ _this.attr('title') + '</h4>\
                             </div>\
                             <div class="modal-body" style="text-align:center">\
-                                <img style="max-width:100%" src="'+ _this.data('src') +'">\
+                                <img style="max-width:100%" src="'+ _this.data('src') + '">\
                             </div>\
                         </div>\
                     </div>\
@@ -63,23 +63,23 @@ if( $('.sns-wechat').length ){
 }
 
 
-if( $('.carousel').length ){
+if ($('.carousel').length) {
     var el_carousel = $('.carousel')
 
     el_carousel.carousel({
         interval: 4000
     })
 
-    tbquire(['hammer'], function(Hammer) {
+    tbquire(['hammer'], function (Hammer) {
 
         // window.Hammer = Hammer
-        
+
         var mc = new Hammer(el_carousel[0]);
 
-        mc.on("panleft panright swipeleft swiperight", function(ev) {
-            if( ev.type == 'swipeleft' || ev.type == 'panleft' ){
+        mc.on("panleft panright swipeleft swiperight", function (ev) {
+            if (ev.type == 'swipeleft' || ev.type == 'panleft') {
                 el_carousel.carousel('next')
-            }else if( ev.type == 'swiperight' || ev.type == 'panright' ){
+            } else if (ev.type == 'swiperight' || ev.type == 'panright') {
                 el_carousel.carousel('prev')
             }
         });
@@ -88,20 +88,20 @@ if( $('.carousel').length ){
 }
 
 
-if( Number(jsui.ajaxpager) > 0 && ($('.excerpt').length || $('.excerpt-minic').length) ){
-    tbquire(['ias'], function() {
-        if( !jsui.bd.hasClass('site-minicat') && $('.excerpt').length ){
+if (Number(jsui.ajaxpager) > 0 && ($('.excerpt').length || $('.excerpt-minic').length)) {
+    tbquire(['ias'], function () {
+        if (!jsui.bd.hasClass('site-minicat') && $('.excerpt').length) {
             $.ias({
-                triggerPageThreshold: jsui.ajaxpager?Number(jsui.ajaxpager)+1:5,
+                triggerPageThreshold: jsui.ajaxpager ? Number(jsui.ajaxpager) + 1 : 5,
                 history: false,
-                container : '.content',
+                container: '.content',
                 item: '.excerpt',
                 pagination: '.pagination',
                 next: '.next-page a',
-                loader: '<div class="pagination-loading"><img src="'+jsui.uri+'/img/loading.gif"></div>',
+                loader: '<div class="pagination-loading"><img src="' + jsui.uri + '/img/loading.gif"></div>',
                 trigger: 'More',
-                onRenderComplete: function() {
-                    tbquire(['lazyload'], function() {
+                onRenderComplete: function () {
+                    tbquire(['lazyload'], function () {
                         $('.excerpt .thumb').lazyload({
                             data_attribute: 'src',
                             placeholder: jsui.uri + '/img/thumbnail.png',
@@ -112,18 +112,18 @@ if( Number(jsui.ajaxpager) > 0 && ($('.excerpt').length || $('.excerpt-minic').l
             });
         }
 
-        if( jsui.bd.hasClass('site-minicat') && $('.excerpt-minic').length ){
+        if (jsui.bd.hasClass('site-minicat') && $('.excerpt-minic').length) {
             $.ias({
-                triggerPageThreshold: jsui.ajaxpager?Number(jsui.ajaxpager)+1:5,
+                triggerPageThreshold: jsui.ajaxpager ? Number(jsui.ajaxpager) + 1 : 5,
                 history: false,
-                container : '.content',
+                container: '.content',
                 item: '.excerpt-minic',
                 pagination: '.pagination',
                 next: '.next-page a',
-                loader: '<div class="pagination-loading"><img src="'+jsui.uri+'/img/loading.gif"></div>',
+                loader: '<div class="pagination-loading"><img src="' + jsui.uri + '/img/loading.gif"></div>',
                 trigger: 'More',
-                onRenderComplete: function() {
-                    tbquire(['lazyload'], function() {
+                onRenderComplete: function () {
+                    tbquire(['lazyload'], function () {
                         $('.excerpt .thumb').lazyload({
                             data_attribute: 'src',
                             placeholder: jsui.uri + '/img/thumbnail.png',
@@ -141,7 +141,7 @@ if( Number(jsui.ajaxpager) > 0 && ($('.excerpt').length || $('.excerpt-minic').l
  * lazyload
  * ====================================================
 */
-tbquire(['lazyload'], function() {
+tbquire(['lazyload'], function () {
     $('.avatar').lazyload({
         data_attribute: 'src',
         placeholder: jsui.uri + '/img/avatar-default.png',
@@ -175,20 +175,6 @@ tbquire(['lazyload'], function() {
 
 
 
-/* 
- * prettyprint
- * ====================================================
-*/
-$('pre').each(function(){
-    if( !$(this).attr('style') ) $(this).addClass('prettyprint')
-})
-
-if( $('.prettyprint').length ){
-    tbquire(['prettyprint'], function(prettyprint) {
-        prettyPrint()
-    })
-}
-
 
 
 /* 
@@ -201,15 +187,15 @@ if (jsui.bd.hasClass('comment-open')) {
 }
 
 jsui.rb_qq = ''
-if( jsui.qq_id ){
-    jsui.rb_qq = '<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin='+jsui.qq_id+'&site=qq&menu=yes"><i class="fa fa-qq"></i></a><h6>'+jsui.qq_tip+'<i></i></h6></li>'
+if (jsui.qq_id) {
+    jsui.rb_qq = '<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=' + jsui.qq_id + '&site=qq&menu=yes"><i class="fa fa-qq"></i></a><h6>' + jsui.qq_tip + '<i></i></h6></li>'
 }
 
 jsui.bd.append('\
     <div class="m-mask"></div>\
     <div class="rollbar"><ul>'
-    +jsui.rb_comment
-    +jsui.rb_qq+
+    + jsui.rb_comment
+    + jsui.rb_qq +
     '<li><a href="javascript:(scrollTo());"><i class="fa fa-angle-up"></i></a><h6>去顶部<i></i></h6></li>\
     </ul></div>\
 ')
@@ -218,7 +204,7 @@ jsui.bd.append('\
 
 var _wid = $(window).width()
 
-$(window).resize(function(event) {
+$(window).resize(function (event) {
     _wid = $(window).width()
 });
 
@@ -226,12 +212,12 @@ $(window).resize(function(event) {
 
 var scroller = $('.rollbar')
 var _fix = (jsui.bd.hasClass('nav_fixed') && !jsui.bd.hasClass('page-template-navs')) ? true : false
-$(window).scroll(function() {
+$(window).scroll(function () {
     var h = document.documentElement.scrollTop + document.body.scrollTop
 
-    if( _fix && h > 0 && _wid > 720 ){
+    if (_fix && h > 0 && _wid > 720) {
         jsui.bd.addClass('nav-fixed')
-    }else{
+    } else {
         jsui.bd.removeClass('nav-fixed')
     }
 
@@ -259,7 +245,7 @@ $('.user-welcome').tooltip({
  * ====================================================
 */
 if (!jsui.bd.hasClass('logged-in')) {
-    tbquire(['signpop'], function(signpop) {
+    tbquire(['signpop'], function (signpop) {
         signpop.init()
     })
 }
@@ -271,14 +257,14 @@ if (!jsui.bd.hasClass('logged-in')) {
 */
 
 var _sidebar = $('.sidebar')
-if (_wid>1024 && _sidebar.length) {
+if (_wid > 1024 && _sidebar.length) {
     var h1 = 15,
         h2 = 30
     var rollFirst = _sidebar.find('.widget:eq(' + (jsui.roll[0] - 1) + ')')
     var sheight = rollFirst.height()
 
 
-    rollFirst.on('affix-top.bs.affix', function() {
+    rollFirst.on('affix-top.bs.affix', function () {
 
         rollFirst.css({
             top: 0
@@ -294,17 +280,17 @@ if (_wid>1024 && _sidebar.length) {
         };
     })
 
-    rollFirst.on('affix.bs.affix', function() {
+    rollFirst.on('affix.bs.affix', function () {
 
         rollFirst.css({
-            top: jsui.bd.hasClass('nav-fixed')?h1+63:h1
+            top: jsui.bd.hasClass('nav-fixed') ? h1 + 63 : h1
         })
 
         for (var i = 1; i < jsui.roll.length; i++) {
             var item = jsui.roll[i] - 1
             var current = _sidebar.find('.widget:eq(' + item + ')')
             current.addClass('affix').css({
-                top: jsui.bd.hasClass('nav-fixed')?sheight+h2+63:sheight+h2
+                top: jsui.bd.hasClass('nav-fixed') ? sheight + h2 + 63 : sheight + h2
             })
             sheight += current.height() + 15
         };
@@ -322,16 +308,16 @@ if (_wid>1024 && _sidebar.length) {
 
 
 
-$('[data-event="rewards"]').on('click', function(){
+$('[data-event="rewards"]').on('click', function () {
     $('.rewards-popover-mask, .rewards-popover').fadeIn()
 })
 
-$('[data-event="rewards-close"]').on('click', function(){
+$('[data-event="rewards-close"]').on('click', function () {
     $('.rewards-popover-mask, .rewards-popover').fadeOut()
 })
 
 
-if( $('#SOHUCS').length ) $('#SOHUCS').before('<span id="comments"></span>')
+if ($('#SOHUCS').length) $('#SOHUCS').before('<span id="comments"></span>')
 
 
 /*$('.plinks a').each(function(){
@@ -344,29 +330,29 @@ if( $('#SOHUCS').length ) $('#SOHUCS').before('<span id="comments"></span>')
 
 
 
-if( $('.post-like').length ){
-    tbquire(['jquery.cookie'], function() {
-        $('.post-like').on('click', function(){
+if ($('.post-like').length) {
+    tbquire(['jquery.cookie'], function () {
+        $('.post-like').on('click', function () {
             var _ta = $(this)
             var pid = _ta.attr('data-pid')
-            if ( !pid || !/^\d{1,}$/.test(pid) ) return;
+            if (!pid || !/^\d{1,}$/.test(pid)) return;
 
-            if( !jsui.is_signin ){
+            if (!jsui.is_signin) {
                 var lslike = lcs.get('_likes') || ''
-                if( lslike.indexOf(','+pid+',')!==-1 ) return alert('你已赞！')
+                if (lslike.indexOf(',' + pid + ',') !== -1) return alert('你已赞！')
 
-                if( !lslike ){
-                    lcs.set('_likes', ','+pid+',')
-                }else{
-                    if( lslike.length >= 160 ){
-                        lslike = lslike.substring(0,lslike.length-1)
+                if (!lslike) {
+                    lcs.set('_likes', ',' + pid + ',')
+                } else {
+                    if (lslike.length >= 160) {
+                        lslike = lslike.substring(0, lslike.length - 1)
                         lslike = lslike.substr(1).split(',')
-                        lslike.splice(0,1)
+                        lslike.splice(0, 1)
                         lslike.push(pid)
                         lslike = lslike.join(',')
-                        lcs.set('_likes', ','+lslike+',')
-                    }else{
-                        lcs.set('_likes', lslike+pid+',')
+                        lcs.set('_likes', ',' + lslike + ',')
+                    } else {
+                        lcs.set('_likes', lslike + pid + ',')
                     }
                 }
             }
@@ -379,7 +365,7 @@ if( $('.post-like').length ){
                     key: 'like',
                     pid: pid
                 },
-                success: function(data, textStatus, xhr) {
+                success: function (data, textStatus, xhr) {
                     if (data.error) return false;
                     _ta.toggleClass('actived')
                     _ta.find('span').html(data.response)
@@ -398,7 +384,7 @@ if( $('.post-like').length ){
  * ====================================================
 */
 if (jsui.bd.hasClass('comment-open')) {
-    tbquire(['comment'], function(comment) {
+    tbquire(['comment'], function (comment) {
         comment.init()
     })
 }
@@ -409,7 +395,7 @@ if (jsui.bd.hasClass('comment-open')) {
  * ====================================================
 */
 if (jsui.bd.hasClass('page-template-pagesuser-php')) {
-    tbquire(['user'], function(user) {
+    tbquire(['user'], function (user) {
         user.init()
     })
 }
@@ -419,35 +405,35 @@ if (jsui.bd.hasClass('page-template-pagesuser-php')) {
  * page nav
  * ====================================================
 */
-if( jsui.bd.hasClass('page-template-pagesnavs-php') ){
+if (jsui.bd.hasClass('page-template-pagesnavs-php')) {
 
     var titles = ''
     var i = 0
-    $('#navs .items h2').each(function(){
-        titles += '<li><a href="#'+i+'">'+$(this).text()+'</a></li>'
+    $('#navs .items h2').each(function () {
+        titles += '<li><a href="#' + i + '">' + $(this).text() + '</a></li>'
         i++
     })
-    $('#navs nav ul').html( titles )
+    $('#navs nav ul').html(titles)
 
     $('#navs .items a').attr('target', '_blank')
 
     $('#navs nav ul').affix({
         offset: {
             top: $('#navs nav ul').offset().top,
-            bottom: $('.footer').height() + $('.footer').css('padding-top').split('px')[0]*2
+            bottom: $('.footer').height() + $('.footer').css('padding-top').split('px')[0] * 2
         }
     })
 
 
-    if( location.hash ){
+    if (location.hash) {
         var index = location.hash.split('#')[1]
-        $('#navs nav li:eq('+index+')').addClass('active')
-        $('#navs nav .item:eq('+index+')').addClass('active')
-        scrollTo( '#navs .items .item:eq('+index+')' )
+        $('#navs nav li:eq(' + index + ')').addClass('active')
+        $('#navs nav .item:eq(' + index + ')').addClass('active')
+        scrollTo('#navs .items .item:eq(' + index + ')')
     }
-    $('#navs nav a').each(function(e){
-        $(this).click(function(){
-            scrollTo( '#navs .items .item:eq('+$(this).parent().index()+')' )
+    $('#navs nav a').each(function (e) {
+        $(this).click(function () {
+            scrollTo('#navs .items .item:eq(' + $(this).parent().index() + ')')
             $(this).parent().addClass('active').siblings().removeClass('active')
         })
     })
@@ -458,11 +444,11 @@ if( jsui.bd.hasClass('page-template-pagesnavs-php') ){
  * page search
  * ====================================================
 */
-if( jsui.bd.hasClass('search-results') ){
+if (jsui.bd.hasClass('search-results')) {
     var val = $('.site-search-form .search-input').val()
-    var reg = eval('/'+val+'/i')
-    $('.excerpt h2 a, .excerpt .note').each(function(){
-        $(this).html( $(this).text().replace(reg, function(w){ return '<b>'+w+'</b>' }) )
+    var reg = eval('/' + val + '/i')
+    $('.excerpt h2 a, .excerpt .note').each(function () {
+        $(this).html($(this).text().replace(reg, function (w) { return '<b>' + w + '</b>' }))
     })
 }
 
@@ -471,12 +457,12 @@ if( jsui.bd.hasClass('search-results') ){
  * search
  * ====================================================
 */
-$('.search-show').bind('click', function(){
+$('.search-show').bind('click', function () {
     $(this).find('.fa').toggleClass('fa-remove')
 
     jsui.bd.toggleClass('search-on')
 
-    if( jsui.bd.hasClass('search-on') ){
+    if (jsui.bd.hasClass('search-on')) {
         $('.site-search').find('input').focus()
         jsui.bd.removeClass('m-nav-show')
     }
@@ -487,27 +473,27 @@ $('.search-show').bind('click', function(){
  * ====================================================
 */
 
-jsui.bd.append( $('.site-navbar').clone().attr('class', 'm-navbar') )
+jsui.bd.append($('.site-navbar').clone().attr('class', 'm-navbar'))
 
-$('.m-navbar li.menu-item-has-children').each(function(){
+$('.m-navbar li.menu-item-has-children').each(function () {
     $(this).append('<i class="fa fa-angle-down faa"></i>')
 })
 
-$('.m-navbar li.menu-item-has-children .faa').on('click', function(){
+$('.m-navbar li.menu-item-has-children .faa').on('click', function () {
     $(this).parent().find('.sub-menu').slideToggle(300)
 })
 
 
-$('.m-icon-nav').on('click', function(){
+$('.m-icon-nav').on('click', function () {
     jsui.bd.addClass('m-nav-show')
 
     $('.m-mask').show()
 
     jsui.bd.removeClass('search-on')
-    $('.search-show .fa').removeClass('fa-remove') 
+    $('.search-show .fa').removeClass('fa-remove')
 })
 
-$('.m-mask').on('click', function(){
+$('.m-mask').on('click', function () {
     $(this).hide()
     jsui.bd.removeClass('m-nav-show')
 })
@@ -515,24 +501,24 @@ $('.m-mask').on('click', function(){
 
 
 
-if ($('.article-content').length){
+if ($('.article-content').length) {
     $('.article-content img').attr('data-tag', 'bdshare')
 }
 
 
 video_ok()
-$(window).resizeend(function(event) {
+$(window).resizeend(function (event) {
     video_ok()
 });
 
-function video_ok(){
+function video_ok() {
     var cw = $('.article-content').width()
-    $('.article-content embed, .article-content video, .article-content iframe').each(function(){
-        var w = $(this).attr('width')||0,
-            h = $(this).attr('height')||0
-        if( cw && w && h ){
-            $(this).css('width', cw<w?cw:w)
-            $(this).css('height', $(this).width()/(w/h))
+    $('.article-content embed, .article-content video, .article-content iframe').each(function () {
+        var w = $(this).attr('width') || 0,
+            h = $(this).attr('height') || 0
+        if (cw && w && h) {
+            $(this).css('width', cw < w ? cw : w)
+            $(this).css('height', $(this).width() / (w / h))
         }
     })
 }
@@ -575,10 +561,10 @@ function is_mail(str) {
 }
 
 
-$.fn.serializeObject = function(){
+$.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
-    $.each(a, function() {
+    $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
@@ -593,8 +579,8 @@ $.fn.serializeObject = function(){
 
 
 function strToDate(str, fmt) { //author: meizz   
-    if( !fmt ) fmt = 'yyyy-MM-dd hh:mm:ss'
-    str = new Date(str*1000)
+    if (!fmt) fmt = 'yyyy-MM-dd hh:mm:ss'
+    str = new Date(str * 1000)
     var o = {
         "M+": str.getMonth() + 1, //月份   
         "d+": str.getDate(), //日   
@@ -619,6 +605,6 @@ function strToDate(str, fmt) { //author: meizz
 /* erphpdown 登录使用dux弹出登录框
  * ====================================================
  */
-$('.erphp-login-must').each(function(){
+$('.erphp-login-must').each(function () {
     $(this).addClass('signin-loader')
 })

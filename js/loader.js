@@ -44,7 +44,6 @@ tbquire.config({
 		'jsrender'      : 'libs/jsrender.min',
 		'router'        : 'libs/router.min',
 		'lazyload'      : 'libs/lazyload.min',
-		'prettyprint'   : 'libs/prettyprint',
 		'ias'           : 'libs/ias.min',
 		'hammer'        : 'libs/hammer.min',
 		'main'          : 'main',
