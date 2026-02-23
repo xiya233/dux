@@ -182,19 +182,23 @@ function detectLanguage(code) {
         return 'toml';
     }
 
-    // YAML detection
-    if (/^(\s*-\s+.*|^[\w\s]+:\s*(.+)?)$/m.test(code) && !/[{};]/.test(code)) {
-        return 'yaml';
-    }
-
     // JavaScript detection
-    if (/(?:const|let|var|function|=>|document\.)\s+/im.test(code)) {
+    if (/(?:\bconst\b|\blet\b|\bvar\b|\bfunction\b|=>|\bdocument\.)\s+/im.test(code) || /console\.log\(/im.test(code)) {
         return 'javascript';
     }
 
     // Python detection
-    if (/(?:def|import|print\(|if __name__ ==)\s+/im.test(code)) {
+    if (/(?:\bdef\b|\bimport\b|print\(|if __name__ ==)\s+/im.test(code)) {
         return 'python';
+    }
+
+    // YAML detection
+    // Matches root keys (e.g., config:, x-env: &env), array items (- item), or nested keys
+    if (/^[a-zA-Z0-9_-]+:\s*(?:&[a-zA-Z0-9_-]+\s*)?$/m.test(code) || /^\s*-\s+[\w.-]+/m.test(code) || /^\s*[a-zA-Z0-9_.-]+:\s+.*$/m.test(code)) {
+        // Reject if typical CSS lines (ending with ;) are found, otherwise consider it YAML
+        if (!/;\s*$/m.test(code)) {
+            return 'yaml';
+        }
     }
 
     return 'text';
