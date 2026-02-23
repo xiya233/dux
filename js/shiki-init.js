@@ -7,9 +7,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     const presToProcess = Array.from(preElements).filter(pre => !pre.hasAttribute('data-shiki'));
     if (presToProcess.length === 0) return;
 
-    // Optional: Add a loading state
+    // We let CSS hide the pre tags initially (opacity: 0) to prevent FOUC
+
+    // Synchronously create Mac wrappers and loading state
     presToProcess.forEach(pre => {
-        pre.style.opacity = '0.5';
+        let codeText = pre.textContent || '';
+        const codeEl = pre.querySelector('code');
+        const className = (codeEl && codeEl.className) || pre.className;
+        const match = className && className.match(/language-([a-zA-Z0-9_-]+)/);
+
+        let lang = (match && match[1]) ? match[1] : detectLanguage(codeText);
+        pre.setAttribute('data-detected-lang', lang); // Store for later
+
+        // Create Mac wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'shiki-container shiki-loading';
+
+        const header = document.createElement('div');
+        header.className = 'shiki-header';
+
+        const dots = document.createElement('div');
+        dots.className = 'shiki-mac-dots';
+        dots.innerHTML = `
+            <div class="shiki-mac-dot close"></div>
+            <div class="shiki-mac-dot minimize"></div>
+            <div class="shiki-mac-dot maximize"></div>
+        `;
+
+        const langLabel = document.createElement('div');
+        langLabel.className = 'shiki-lang';
+        langLabel.textContent = lang + ' - Shiki代码高亮加载中...';
+
+        header.appendChild(dots);
+        header.appendChild(langLabel);
+
+        wrapper.appendChild(header);
+
+        // Put original pre inside wrapper, give it basic padding
+        pre.parentNode.replaceChild(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        // Ensure the pre is visible inside the container but styled basic
+        pre.style.opacity = '1';
+        pre.style.padding = '15px';
+        pre.style.margin = '0';
+        pre.style.overflowX = 'auto';
+        pre.style.color = '#abb2bf';
+        pre.style.backgroundColor = 'transparent';
+        pre.style.fontFamily = 'Consolas, Monaco, "Courier New", monospace';
+        pre.style.fontSize = '14px';
+
+        wrapper.setAttribute('data-shiki', 'loading');
     });
 
     try {
@@ -19,13 +67,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'systemd', 'dotenv', 'apache', 'dockerfile', 'text'],
         });
 
-        for (const pre of presToProcess) {
-            let codeText = pre.textContent || '';
-            const codeEl = pre.querySelector('code');
-            const className = (codeEl && codeEl.className) || pre.className;
-            const match = className && className.match(/language-([a-zA-Z0-9_-]+)/);
+        const wrappers = document.querySelectorAll('.shiki-container[data-shiki="loading"]');
+        for (const wrapper of Array.from(wrappers)) {
+            const pre = wrapper.querySelector('pre');
+            if (!pre) continue;
 
-            let lang = (match && match[1]) ? match[1] : detectLanguage(codeText);
+            let codeText = pre.textContent || '';
+            let lang = pre.getAttribute('data-detected-lang') || 'text';
 
             if (lang !== 'text' && !highlighter.getLoadedLanguages().includes(lang)) {
                 try {
@@ -41,46 +89,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 theme: 'monokai'
             });
 
-            // Create Mac wrapper
-            const wrapper = document.createElement('div');
-            wrapper.className = 'shiki-container';
-
-            const header = document.createElement('div');
-            header.className = 'shiki-header';
-
-            const dots = document.createElement('div');
-            dots.className = 'shiki-mac-dots';
-            dots.innerHTML = `
-                <div class="shiki-mac-dot close"></div>
-                <div class="shiki-mac-dot minimize"></div>
-                <div class="shiki-mac-dot maximize"></div>
-            `;
-
-            const langLabel = document.createElement('div');
-            langLabel.className = 'shiki-lang';
-            langLabel.textContent = lang;
-
-            header.appendChild(dots);
-            header.appendChild(langLabel);
-
-            wrapper.appendChild(header);
-
             // Create temporary container to hold the HTML from Shiki
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
             const highlightedPre = tempDiv.firstElementChild;
             highlightedPre.classList.add('shiki');
 
-            wrapper.appendChild(highlightedPre);
-
             // Replace original pre
-            pre.parentNode.replaceChild(wrapper, pre);
+            wrapper.replaceChild(highlightedPre, pre);
+
+            // Update lang label
+            const langLabel = wrapper.querySelector('.shiki-lang');
+            if (langLabel) {
+                langLabel.textContent = lang;
+            }
+
+            wrapper.classList.remove('shiki-loading');
             wrapper.setAttribute('data-shiki', 'true');
         }
     } catch (error) {
         console.error('Shiki highlighting failed:', error);
         // Fallback: restore opacity if failed
-        presToProcess.forEach(pre => {
+        const loaders = document.querySelectorAll('.shiki-loading pre');
+        loaders.forEach(pre => {
             pre.style.opacity = '1';
         });
     }
