@@ -1,4 +1,4 @@
-import { createHighlighter } from 'https://esm.sh/shiki@1.0.0';
+import { createHighlighter } from 'https://esm.sh/shiki@3.22.0';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const preElements = document.querySelectorAll('pre');
