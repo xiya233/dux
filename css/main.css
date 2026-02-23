@@ -3906,12 +3906,18 @@ pre.shiki {
 	font-family: Consolas, Monaco, "Courier New", monospace;
 	font-size: 14px;
 	line-height: 1.6;
+	white-space: pre !important;
+	word-wrap: normal !important;
+	word-break: normal !important;
 	background-color: transparent !important;
 	/* Let container handle background */
 }
 
 pre.shiki code {
 	font-family: inherit;
+	white-space: pre !important;
+	word-wrap: normal !important;
+	word-break: normal !important;
 }
 
 pre.shiki::-webkit-scrollbar {
