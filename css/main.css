@@ -3901,6 +3901,8 @@ pre.shiki {
 	margin: 0;
 	padding: 15px;
 	overflow-x: auto;
+	overflow-y: auto;
+	max-height: 600px;
 	font-family: Consolas, Monaco, "Courier New", monospace;
 	font-size: 14px;
 	line-height: 1.6;
