@@ -66,6 +66,7 @@ function add_shiki_quicktags_dropdown()
                                     var startPos = canvas.selectionStart;
                                     var endPos = canvas.selectionEnd;
                                     var scrollTop = canvas.scrollTop;
+                                    var winScroll = $(window).scrollTop();
                                     var selectedText = canvas.value.substring(startPos, endPos);
 
                                     canvas.value = canvas.value.substring(0, startPos) + openTag + selectedText + closeTag + canvas.value.substring(endPos, canvas.value.length);
@@ -73,6 +74,7 @@ function add_shiki_quicktags_dropdown()
                                     canvas.selectionStart = startPos + openTag.length + selectedText.length;
                                     canvas.selectionEnd = canvas.selectionStart;
                                     canvas.scrollTop = scrollTop;
+                                    $(window).scrollTop(winScroll);
                                 } else {
                                     canvas.value += openTag + closeTag;
                                 }
