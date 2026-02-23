@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Initialize highlighter with the required languages
         const highlighter = await createHighlighter({
             themes: ['monokai'],
-            langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'systemd', 'dotenv', 'text'],
+            langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'systemd', 'dotenv', 'apache', 'dockerfile', 'text'],
         });
 
         for (const pre of presToProcess) {
@@ -76,8 +76,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 function detectLanguage(code) {
     if (!code) return 'text';
 
+    // Dockerfile detection
+    if (/^((?:FROM|MAINTAINER|RUN|CMD|LABEL|EXPOSE|ENV|ADD|COPY|ENTRYPOINT|VOLUME|USER|WORKDIR|ARG|ONBUILD|HEALTHCHECK|SHELL)\s+)/m.test(code)) {
+        return 'dockerfile';
+    }
+
+    // Apache detection
+    if (/<(?:VirtualHost|Directory|DirectoryMatch|Files|Location|IfModule)\b/i.test(code) || /^\s*(?:ServerName|DocumentRoot|RewriteEngine|RewriteRule|LoadModule)\s+/im.test(code)) {
+        return 'apache';
+    }
+
     // Nginx detection
-    if (/^\s*(server|location|upstream|worker_processes)\s*([{;]|\s+)/im.test(code)) {
+    if (/^\s*(server|location|upstream|worker_processes)\s*([{;]|\s+)/im.test(code) && !/<(?:VirtualHost|Directory)/i.test(code)) {
         return 'nginx';
     }
 
