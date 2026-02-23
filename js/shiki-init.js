@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Initialize highlighter with the required languages
         const highlighter = await createHighlighter({
             themes: ['monokai'],
-            langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'text'],
+            langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'systemd', 'dotenv', 'text'],
         });
 
         for (const pre of presToProcess) {
@@ -90,6 +90,17 @@ function detectLanguage(code) {
             // Might be malformed but still looks like JSON
             return 'json';
         }
+    }
+
+    // systemd (system-config) detection
+    if (/^\s*\[(Unit|Service|Install|Socket|Timer|Mount|Path|Scope|Slice)\]/m.test(code) && /^[a-zA-Z0-9_-]+\s*=/m.test(code)) {
+        return 'systemd';
+    }
+
+    // dotenv detection
+    // Matches typical uppercase env vars like DB_HOST=localhost or PUID=1000
+    if (/^[A-Z_][A-Z0-9_]*\s*=\s*.+/m.test(code) && !/[{};]/.test(code) && !/^\s*\[/m.test(code)) {
+        return 'dotenv';
     }
 
     // TOML detection
