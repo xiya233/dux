@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Initialize highlighter with the required languages
         const highlighter = await createHighlighter({
-            themes: ['github-dark'],
+            themes: ['monokai'],
             langs: ['nginx', 'json', 'yaml', 'toml', 'javascript', 'python', 'text'],
         });
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const html = highlighter.codeToHtml(codeText, {
                 lang: lang,
-                theme: 'github-dark'
+                theme: 'monokai'
             });
 
             // Create Mac wrapper

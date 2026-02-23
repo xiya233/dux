@@ -3851,7 +3851,7 @@ body.sign-show {
 	position: relative;
 	margin: 20px 0;
 	border-radius: 8px;
-	background-color: #282c34;
+	background-color: #272822;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
 }
@@ -3860,8 +3860,8 @@ body.sign-show {
 	display: flex;
 	align-items: center;
 	padding: 10px 15px;
-	background-color: #1e2227;
-	border-bottom: 1px solid #181a1f;
+	background-color: #1e1e1a;
+	border-bottom: 1px solid #141411;
 }
 
 .shiki-mac-dots {
@@ -3931,7 +3931,7 @@ pre.shiki::-webkit-scrollbar-thumb {
 }
 
 pre.shiki::-webkit-scrollbar-track {
-	background: #282c34;
+	background: #272822;
 }
 
 
