@@ -192,6 +192,16 @@ function detectLanguage(code) {
         return 'python';
     }
 
+    // SQL detection
+    if (/\b(?:SELECT|INSERT\s+INTO|UPDATE|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE|JOIN|WHERE|GROUP\s+BY|ORDER\s+BY)\b/im.test(code)) {
+        return 'sql';
+    }
+
+    // Nix detection
+    if (/(?:\{.*?pkgs.*?\}|mkIf|mkMerge|mkOverride|builtins\.|let\s+.*?\s+in\s+)/is.test(code) || /^\s*\{.*(?:config|lib|pkgs|\.\.\.).*:\s*$/m.test(code)) {
+        return 'nix';
+    }
+
     // YAML detection
     // Matches root keys (e.g., config:, x-env: &env), array items (- item), or nested keys
     if (/^[a-zA-Z0-9_-]+:\s*(?:&[a-zA-Z0-9_-]+\s*)?$/m.test(code) || /^\s*-\s+[\w.-]+/m.test(code) || /^\s*[a-zA-Z0-9_.-]+:\s+.*$/m.test(code)) {
