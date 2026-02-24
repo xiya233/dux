@@ -188,9 +188,9 @@ function detectLanguage(code) {
         return 'toml';
     }
 
-    // JavaScript detection
-    if (/(?:\bconst\b|\blet\b|\bvar\b|\bfunction\b|=>|\bdocument\.)\s+/im.test(code) || /console\.log\(/im.test(code)) {
-        return 'javascript';
+    // Nix detection
+    if (/(?:\{.*?pkgs.*?\}|mkIf|mkMerge|mkOverride|builtins\.|let\s+.*?\s+in\s+)/is.test(code) || /^\s*\{.*(?:config|lib|pkgs|\.\.\.).*:\s*$/m.test(code)) {
+        return 'nix';
     }
 
     // Python detection
@@ -203,9 +203,9 @@ function detectLanguage(code) {
         return 'sql';
     }
 
-    // Nix detection
-    if (/(?:\{.*?pkgs.*?\}|mkIf|mkMerge|mkOverride|builtins\.|let\s+.*?\s+in\s+)/is.test(code) || /^\s*\{.*(?:config|lib|pkgs|\.\.\.).*:\s*$/m.test(code)) {
-        return 'nix';
+    // JavaScript detection
+    if (/(?:\bconst\b|\blet\b|\bvar\b|\bfunction\b|=>|\bdocument\.)\s+/im.test(code) || /console\.log\(/im.test(code)) {
+        return 'javascript';
     }
 
     // YAML detection
