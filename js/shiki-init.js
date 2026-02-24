@@ -151,8 +151,8 @@ function detectLanguage(code) {
     }
 
     // KDL detection
-    // Matches node blocks (like domains, *, or IPs) followed by '{' AND contains KDL native booleans (#true/#false) or string-value nodes, WITHOUT Nginx/C-style semicolons.
-    if (/^\s*(?:[a-zA-Z0-9_.,-]+|\*|"[^"]+")\s*\{/m.test(code) && (/\s+#(?:true|false|null)\b/.test(code) || /^\s+[a-zA-Z0-9_-]+\s+"[^"]+"/m.test(code)) && !/;\s*$/m.test(code)) {
+    // Matches node blocks (like domains with *, comma separated, or IPs) followed by '{' AND contains KDL booleans (#true), arguments, bare configs, or `...`, WITHOUT semicolons.
+    if (/^\s*(?:[a-zA-Z0-9_.,*-]+|"[^"]+")\s*\{/m.test(code) && (/\s+#(?:true|false|null)\b/.test(code) || /^\s+[a-zA-Z0-9_-]+\s+(?:"[^"]+"|[\d.]+)(?:\s+"[^"]+")*\s*$/m.test(code) || /^\s*\.\.\.\s*$/m.test(code) || /^\s*[a-zA-Z0-9_-]+\s*$/m.test(code)) && !/;\s*$/m.test(code)) {
         return 'kdl';
     }
 
