@@ -188,12 +188,12 @@ function detectLanguage(code) {
     }
 
     // Python detection
-    if (/(?:\bdef\b|\bimport\b|print\(|if __name__ ==)\s+/im.test(code)) {
+    if (/(?:\bdef\s+\w+|\bimport\s+[\w.]+|\bfrom\s+[\w.]+\s+import\b|print\(|\bwith\s+[\w.(]+\s*as\s+|\bwith\s+open\s*\(|\bif\s+__name__\s*==|\belif\b|\byield\b|\bpass\b|\bTrue\b|\bFalse\b|\bNone\b|\bif\b[^:\n]+\belse\b|\[.*?for.*?in.*?\]|\.write\(|\.join\()/.test(code)) {
         return 'python';
     }
 
     // SQL detection
-    if (/\b(?:SELECT|INSERT\s+INTO|UPDATE|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE|JOIN|WHERE|GROUP\s+BY|ORDER\s+BY)\b/im.test(code)) {
+    if (/\b(?:SELECT\s+(?:.*?\s+FROM)?|INSERT\s+INTO|UPDATE\s+.*?\s+SET|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE)\b/im.test(code)) {
         return 'sql';
     }
 
