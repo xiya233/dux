@@ -199,7 +199,7 @@ function detectLanguage(code) {
     }
 
     // SQL detection
-    if (/\b(?:SELECT\s+(?:.*?\s+FROM)?|INSERT\s+INTO|UPDATE\s+.*?\s+SET|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE)\b/im.test(code)) {
+    if (/(?:^|[;(])\s*(?:SELECT\b|INSERT\s+INTO|UPDATE\b[^;]{1,150}?\bSET|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE)\b/im.test(code)) {
         return 'sql';
     }
 
