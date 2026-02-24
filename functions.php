@@ -38,7 +38,7 @@ function add_shiki_quicktags_dropdown()
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
                 if (typeof QTags !== 'undefined') {
-                    var langs = ['bash', 'yaml', 'json', 'toml', 'sql', 'nix', 'python', 'javascript', 'nginx', 'apache', 'systemd', 'dotenv', 'text'];
+                    var langs = ['bash', 'yaml', 'json', 'toml', 'sql', 'nix', 'kdl', 'python', 'javascript', 'nginx', 'apache', 'systemd', 'dotenv', 'text'];
 
                     var menuHtml = '<div class="shiki-qt-menu" style="display:none; position:absolute; top:100%; left:0; background:#fff; border:1px solid #ddd; box-shadow:0 1px 3px rgba(0,0,0,0.1); z-index:9999; min-width:130px; border-radius:3px; padding:4px 0; margin-top:2px;">';
                     for (var i = 0; i < langs.length; i++) {

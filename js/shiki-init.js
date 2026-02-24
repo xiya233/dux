@@ -150,6 +150,12 @@ function detectLanguage(code) {
         return 'apache';
     }
 
+    // KDL detection
+    // Matches node blocks (like domains, *, or IPs) followed by '{' AND contains KDL native booleans (#true/#false) or string-value nodes, WITHOUT Nginx/C-style semicolons.
+    if (/^\s*(?:[a-zA-Z0-9_.,-]+|\*|"[^"]+")\s*\{/m.test(code) && (/\s+#(?:true|false|null)\b/.test(code) || /^\s+[a-zA-Z0-9_-]+\s+"[^"]+"/m.test(code)) && !/;\s*$/m.test(code)) {
+        return 'kdl';
+    }
+
     // Nginx detection
     if (/^\s*(server|location|upstream|worker_processes)\s*([{;]|\s+)/im.test(code) && !/<(?:VirtualHost|Directory)/i.test(code)) {
         return 'nginx';
