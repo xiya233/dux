@@ -189,7 +189,7 @@ function detectLanguage(code) {
     }
 
     // Nix detection
-    if (/(?:\{.*?pkgs.*?\}|mkIf|mkMerge|mkOverride|builtins\.|let\s+.*?\s+in\s+)/is.test(code) || /^\s*\{.*(?:config|lib|pkgs|\.\.\.).*:\s*$/m.test(code)) {
+    if (/(?:\{.*?pkgs.*?\}|mkIf|mkMerge|mkOverride|builtins\.|let\s+.*?\s+in\s+|\bimports\s*=\s*\[|\.\/[\w.-]+\.nix\b)/is.test(code) || /^\s*\{.*(?:config|lib|pkgs|\.\.\.).*:\s*$/m.test(code)) {
         return 'nix';
     }
 
